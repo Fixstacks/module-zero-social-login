@@ -1,0 +1,21 @@
+{
+    "zero_social_login_identity": {
+        "column": {
+            "identity_id": true,
+            "customer_id": true,
+            "provider": true,
+            "subject": true,
+            "email": true,
+            "created_at": true,
+            "last_login_at": true
+        },
+        "index": {
+            "ZERO_SOCIAL_LOGIN_IDENTITY_PROVIDER_SUBJECT": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "ZERO_SOCIAL_LOGIN_IDENTITY_CUSTOMER_ID_PROVIDER": true,
+            "ZERO_SOCIAL_LOGIN_IDENTITY_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID": true
+        }
+    }
+}

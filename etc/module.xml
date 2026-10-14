@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+    Copyright © 2026 Roman Pasichnyk
+    SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+
+    Zero_Checkout is only in the sequence so this module's layout for the
+    checkout page merges after its own; it works without Zero_Checkout.
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Zero_SocialLogin">
+        <sequence>
+            <module name="Zero_Core"/>
+            <module name="Magento_Customer"/>
+            <module name="Zero_Checkout"/>
+        </sequence>
+    </module>
+</config>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--
+    Copyright © 2026 Roman Pasichnyk
+    SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+
+    Customer accounts connected to a Google, Apple or Facebook account: one
+    row per customer and provider. `subject` is the provider's stable user ID
+    (OpenID Connect `sub`, Facebook's app-scoped user ID); the email is only
+    shown to the customer, sign-in never matches on it here.
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="zero_social_login_identity" resource="default" engine="innodb" comment="Zero Social Login Identity">
+        <column xsi:type="int" name="identity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Identity ID"/>
+        <column xsi:type="int" name="customer_id" padding="10" unsigned="true" nullable="false" comment="Customer ID"/>
+        <column xsi:type="varchar" name="provider" nullable="false" length="32" comment="Provider Code"/>
+        <column xsi:type="varchar" name="subject" nullable="false" length="255" comment="Provider User ID"/>
+        <column xsi:type="varchar" name="email" nullable="true" length="255" comment="Email at the Provider"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Connected At"/>
+        <column xsi:type="timestamp" name="last_login_at" on_update="false" nullable="true" comment="Last Sign-In At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="identity_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="ZERO_SOCIAL_LOGIN_IDENTITY_CUSTOMER_ID_PROVIDER">
+            <column name="customer_id"/>
+            <column name="provider"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="ZERO_SOCIAL_LOGIN_IDENTITY_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID"
+                    table="zero_social_login_identity" column="customer_id"
+                    referenceTable="customer_entity" referenceColumn="entity_id" onDelete="CASCADE"/>
+        <index referenceId="ZERO_SOCIAL_LOGIN_IDENTITY_PROVIDER_SUBJECT" indexType="btree">
+            <column name="provider"/>
+            <column name="subject"/>
+        </index>
+    </table>
+</schema>

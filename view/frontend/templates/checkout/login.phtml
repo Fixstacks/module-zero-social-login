@@ -1,0 +1,38 @@
+<?php
+/**
+ * Copyright © 2026 Roman Pasichnyk
+ * SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+ *
+ * Zero_Checkout's sign-in block, unchanged, plus "or continue with Google /
+ * Apple / Facebook"; set by this module's layout, so Zero_Checkout isn't
+ * modified.
+ *
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magento\Framework\Escaper $escaper
+ * @var \Zero\Checkout\ViewModel\Checkout\CheckoutPage $viewModel
+ * @var \Zero\SocialLogin\ViewModel\Buttons $socialLogin
+ */
+?>
+<?= /* @noEscape */ $block->fetchView($block->getTemplateFile('Zero_Checkout::checkout/login.phtml')) ?>
+<?php
+$viewModel = $block->getData('viewModel');
+$socialLogin = $block->getData('socialLogin');
+if (!$viewModel->isGuest() || !$viewModel->isLoginEnabled()) {
+    return;
+}
+$buttons = $socialLogin->getButtons('checkout');
+if (!$buttons) {
+    return;
+}
+?>
+<div class="zero-social-login -mt-3 mb-6 flex flex-wrap items-center gap-2 text-sm">
+    <span class="text-base-content/60 mr-1"><?= $escaper->escapeHtml(__('Or continue with')) ?></span>
+    <?php foreach ($buttons as $button): ?>
+        <a href="<?= $escaper->escapeUrl($button['url']) ?>"
+           class="zero-social-login-<?= $escaper->escapeHtmlAttr($button['code']) ?> btn btn-sm btn-outline border-base-300 bg-base-100 hover:bg-base-200 hover:text-base-content gap-2 font-medium"
+           rel="nofollow">
+            <?= /* @noEscape */ $socialLogin->getIcon($button['code']) ?>
+            <span><?= $escaper->escapeHtml($button['label']) ?></span>
+        </a>
+    <?php endforeach; ?>
+</div>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+    Copyright © 2026 Roman Pasichnyk
+    SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+
+    Registration page: "Continue with …" above the form.
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Magento\Framework\View\Element\Template" name="zero.social.login.buttons"
+                   template="Zero_SocialLogin::buttons.phtml" before="customer_form_register"
+                   ifconfig="zero_social_login/general/enabled">
+                <arguments>
+                    <argument name="buttons" xsi:type="object">Zero\SocialLogin\ViewModel\Buttons</argument>
+                    <argument name="from" xsi:type="string">register</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

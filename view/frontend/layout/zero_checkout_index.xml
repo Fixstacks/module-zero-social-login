@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+    Copyright © 2026 Roman Pasichnyk
+    SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+
+    Checkout (Zero_Checkout): its sign-in block gets this module's template,
+    which renders Zero_Checkout's own template and adds "or continue with
+    Google / Apple / Facebook" under it. Zero_Checkout's files stay as they
+    are; without this module (or Zero_Checkout) nothing changes.
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="zero.checkout.login" template="Zero_SocialLogin::checkout/login.phtml">
+            <arguments>
+                <argument name="socialLogin" xsi:type="object">Zero\SocialLogin\ViewModel\Buttons</argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

@@ -1,0 +1,38 @@
+<?php
+/**
+ * Copyright © 2026 Roman Pasichnyk
+ * SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+ *
+ * "Continue with Google / Apple / Facebook" above the sign-in and register
+ * forms: plain links, nothing per customer (the page stays cacheable).
+ * Arguments: `buttons`, `from` (login, register).
+ *
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magento\Framework\Escaper $escaper
+ * @var \Zero\SocialLogin\ViewModel\Buttons $viewModel
+ */
+$viewModel = $block->getData('buttons');
+$from = (string) $block->getData('from');
+$buttons = $viewModel->getButtons($from);
+if (!$buttons) {
+    return;
+}
+?>
+<section class="zero-social-login mb-8" aria-labelledby="zero-social-login-heading">
+    <h2 id="zero-social-login-heading" class="text-sm font-semibold mb-3">
+        <?= $escaper->escapeHtml($from === 'register' ? __('Sign up faster') : __('Sign in faster')) ?>
+    </h2>
+    <div class="grid gap-2 sm:grid-cols-[repeat(auto-fit,minmax(15rem,1fr))]">
+        <?php foreach ($buttons as $button): ?>
+            <a href="<?= $escaper->escapeUrl($button['url']) ?>"
+               class="zero-social-login-<?= $escaper->escapeHtmlAttr($button['code']) ?> btn btn-outline border-base-300 bg-base-100 hover:bg-base-200 hover:text-base-content justify-center gap-3 font-medium whitespace-nowrap"
+               rel="nofollow">
+                <?= /* @noEscape */ $viewModel->getIcon($button['code']) ?>
+                <span><?= $escaper->escapeHtml(__('Continue with %1', $button['label'])) ?></span>
+            </a>
+        <?php endforeach; ?>
+    </div>
+    <p class="mt-6 flex items-center gap-4 text-xs uppercase tracking-wider text-base-content/60 before:h-px before:flex-1 before:bg-base-300 after:h-px after:flex-1 after:bg-base-300">
+        <?= $escaper->escapeHtml(__('or with your email')) ?>
+    </p>
+</section>

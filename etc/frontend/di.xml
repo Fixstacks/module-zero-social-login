@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--
+    Copyright © 2026 Roman Pasichnyk
+    SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\Session\SessionStartChecker">
+        <plugin name="zero_social_login_keep_session_on_apple_post" type="Zero\SocialLogin\Plugin\KeepSessionOnApplePost"/>
+    </type>
+</config>

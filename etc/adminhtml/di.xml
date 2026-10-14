@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+    Copyright © 2026 Roman Pasichnyk
+    SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="Zero\SocialLogin\Model\Config\GoogleRedirectUriComment" type="Zero\SocialLogin\Model\Config\RedirectUriComment">
+        <arguments>
+            <argument name="provider" xsi:type="string">google</argument>
+            <argument name="console" xsi:type="string">the OAuth client's Authorized redirect URIs</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Zero\SocialLogin\Model\Config\AppleRedirectUriComment" type="Zero\SocialLogin\Model\Config\RedirectUriComment">
+        <arguments>
+            <argument name="provider" xsi:type="string">apple</argument>
+            <argument name="console" xsi:type="string">the Services ID's Return URLs (HTTPS only; its domain under Domains and Subdomains)</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Zero\SocialLogin\Model\Config\FacebookRedirectUriComment" type="Zero\SocialLogin\Model\Config\RedirectUriComment">
+        <arguments>
+            <argument name="provider" xsi:type="string">facebook</argument>
+            <argument name="console" xsi:type="string">Facebook Login > Settings > Valid OAuth Redirect URIs</argument>
+        </arguments>
+    </virtualType>
+</config>

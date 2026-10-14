@@ -1,0 +1,68 @@
+<?php
+/**
+ * Copyright © 2026 Roman Pasichnyk
+ * SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+ *
+ * My Account > Sign-In Methods: one row per service, Connect (a link to
+ * the service) or Disconnect (a small POST form with the form key).
+ *
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magento\Framework\Escaper $escaper
+ * @var \Zero\SocialLogin\ViewModel\Account $viewModel
+ * @var \Zero\SocialLogin\ViewModel\Buttons $buttons
+ */
+$viewModel = $block->getData('viewModel');
+$buttons = $block->getData('buttons');
+$rows = $viewModel->getRows();
+?>
+<div class="zero-social-login-account max-w-2xl">
+    <p class="text-sm mb-6">
+        <?= $escaper->escapeHtml(__('Sign in to your account with Google, Apple or Facebook instead of your password.')) ?>
+        <?php if (!$viewModel->hasPassword()): ?>
+            <?= $escaper->escapeHtml(__('Your account has no password yet; to set one, sign out and use "Forgot Your Password?" on the sign-in page.')) ?>
+        <?php endif; ?>
+    </p>
+    <?php if (!$rows): ?>
+        <p class="text-sm"><?= $escaper->escapeHtml(__('No sign-in services are available right now.')) ?></p>
+    <?php else: ?>
+        <ul class="divide-y divide-base-300 border border-base-300 bg-base-100">
+            <?php foreach ($rows as $row): ?>
+                <li class="zero-social-login-row-<?= $escaper->escapeHtmlAttr($row['code']) ?> flex flex-wrap items-center gap-x-4 gap-y-2 p-4">
+                    <?= /* @noEscape */ $buttons->getIcon($row['code']) ?>
+                    <div class="flex-1 min-w-48">
+                        <p class="font-semibold"><?= $escaper->escapeHtml($row['label']) ?></p>
+                        <p class="text-sm text-base-content/70">
+                            <?php if ($row['connected']): ?>
+                                <?= $escaper->escapeHtml($row['email'] !== ''
+                                    ? __('Connected as %1', $row['email'])
+                                    : __('Connected')) ?>
+                                <?php if ($row['since'] !== ''): ?>
+                                    · <?= $escaper->escapeHtml(__('since %1', $block->formatDate($row['since'], \IntlDateFormatter::MEDIUM))) ?>
+                                <?php endif; ?>
+                            <?php else: ?>
+                                <?= $escaper->escapeHtml(__('Not connected')) ?>
+                            <?php endif; ?>
+                        </p>
+                    </div>
+                    <?php if ($row['connected']): ?>
+                        <?php if ($row['can_disconnect']): ?>
+                            <form method="post" action="<?= $escaper->escapeUrl($viewModel->getDisconnectUrl()) ?>">
+                                <input type="hidden" name="form_key" value="<?= $escaper->escapeHtmlAttr($viewModel->getFormKey()) ?>">
+                                <input type="hidden" name="provider" value="<?= $escaper->escapeHtmlAttr($row['code']) ?>">
+                                <button type="submit" class="btn btn-sm btn-outline border-base-300">
+                                    <?= $escaper->escapeHtml(__('Disconnect')) ?>
+                                </button>
+                            </form>
+                        <?php else: ?>
+                            <span class="text-xs text-base-content/60"><?= $escaper->escapeHtml(__('Your only way in')) ?></span>
+                        <?php endif; ?>
+                    <?php elseif ($row['connect_url'] !== ''): ?>
+                        <a class="btn btn-sm btn-neutral" rel="nofollow" href="<?= $escaper->escapeUrl($row['connect_url']) ?>">
+                            <?= $escaper->escapeHtml(__('Connect')) ?>
+                        </a>
+                    <?php endif; ?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
+</div>

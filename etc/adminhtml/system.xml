@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!--
+    Copyright © 2026 Roman Pasichnyk
+    SPDX-License-Identifier: OSL-3.0 OR AFL-3.0
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="zero_social_login" translate="label" type="text" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Social Login</label>
+            <tab>zero</tab>
+            <resource>Zero_SocialLogin::config</resource>
+            <group id="general" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Social Login</label>
+                <comment>Customers sign in and sign up with Google, Apple or Facebook on the sign-in, registration and checkout pages, and connect or disconnect them under My Account > Sign-In Methods. Turn on each service below with the keys from its developer console; the steps are in the theme's docs/social-login.md.</comment>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="google" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Google</label>
+                <depends><field id="zero_social_login/general/enabled">1</field></depends>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enabled</label>
+                    <comment model="Zero\SocialLogin\Model\Config\GoogleRedirectUriComment"/>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="client_id" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Client ID</label>
+                    <comment>Google Cloud Console > APIs &amp; Services > Credentials > OAuth client ID (type: Web application). Ends with .apps.googleusercontent.com.</comment>
+                    <depends><field id="enabled">1</field></depends>
+                </field>
+                <field id="client_secret" translate="label" type="obscure" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Client Secret</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                    <depends><field id="enabled">1</field></depends>
+                </field>
+            </group>
+            <group id="apple" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Apple</label>
+                <depends><field id="zero_social_login/general/enabled">1</field></depends>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enabled</label>
+                    <comment model="Zero\SocialLogin\Model\Config\AppleRedirectUriComment"/>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="client_id" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Services ID</label>
+                    <comment>Apple Developer > Certificates, Identifiers &amp; Profiles > Identifiers > Services IDs, e.g. com.example.shop.signin.</comment>
+                    <depends><field id="enabled">1</field></depends>
+                </field>
+                <field id="team_id" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Team ID</label>
+                    <comment>10 characters, top right in the Apple Developer account.</comment>
+                    <depends><field id="enabled">1</field></depends>
+                </field>
+                <field id="key_id" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Key ID</label>
+                    <comment>The 10-character ID of a key with Sign in with Apple enabled (Keys).</comment>
+                    <depends><field id="enabled">1</field></depends>
+                </field>
+                <field id="private_key" translate="label comment" type="obscure" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Private Key</label>
+                    <comment>The contents of that key's .p8 file, pasted as is (line breaks may be lost; that's fine).</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                    <depends><field id="enabled">1</field></depends>
+                </field>
+            </group>
+            <group id="facebook" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Facebook</label>
+                <depends><field id="zero_social_login/general/enabled">1</field></depends>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enabled</label>
+                    <comment model="Zero\SocialLogin\Model\Config\FacebookRedirectUriComment"/>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="app_id" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>App ID</label>
+                    <comment>Meta for Developers > your app (use case: Authenticate and request data from users with Facebook Login) > App settings > Basic.</comment>
+                    <depends><field id="enabled">1</field></depends>
+                </field>
+                <field id="app_secret" translate="label" type="obscure" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>App Secret</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                    <depends><field id="enabled">1</field></depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
