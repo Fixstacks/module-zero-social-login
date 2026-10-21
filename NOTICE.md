@@ -1,4 +1,4 @@
-# fixstacks/module-zero-social-login — licensing
+# zerofront/module-zero-social-login — licensing
 
 Copyright © 2026 Roman Pasichnyk.
 
